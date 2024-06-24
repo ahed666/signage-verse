@@ -11,12 +11,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/serviceworker.js', function () {
-    return response(file_get_contents(asset('/js/serviceworker.js')), 200, [
-    'Content-Type' => 'text/javascript',
-    'Cache-Control' => 'public, max-age=3600',
-    ]);
-});
 
 Route::middleware([
     'auth:sanctum',

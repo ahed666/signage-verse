@@ -32,7 +32,7 @@
         </script>
 
 
-        {{-- <script src="{{ asset('js/service-worker.js') }}"></script> --}}
+        <script src="{{ asset('js/service-worker.js') }}"></script>
 
         <script src="{{ asset('js/handle-storage.js') }}"></script>
         <script type="module"  src="{{ asset('js/starter-device.js') }}"></script>
