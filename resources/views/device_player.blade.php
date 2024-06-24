@@ -26,19 +26,66 @@
             window.Laravel = {!! json_encode([
                 'csrfToken' => csrf_token(),
             ]) !!};
+            const CACHE_NAME = 'offline-cache-v5';
+const OFFLINE_URL = '/device-player'; // The URL of the web page to cache
 
-            if ('serviceWorker' in navigator) {
-    console.log('Service Worker test');
-        window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/js/service-worker.js')
-            .then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
+// Install event: caching the offline page
+self.addEventListener('install', event => {
+
+    console.log('service worker installing');
+  event.waitUntil(
+    caches.open(CACHE_NAME).then( cache => {
+
+      return cache.addAll([
+
+        // Add other resources you want to cache
+
+
+        OFFLINE_URL,
+        '/js/starter-device.js'
+        // Add more resources as needed
+      ]).catch(error => {
+        console.error('Failed to cache resources:', error);
+    });
+    })
+  );
+});
+
+// call activate event
+self.addEventListener('activate',event=>{
+    console.log('service worker :activated');
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+          return Promise.all(
+            cacheNames.map(cacheName => {
+              if (cacheName !== CACHE_NAME) {
+                return caches.delete(cacheName);
+              }
             })
-            .catch(error => {
-            console.log('Service Worker registration failed:', error);
+          );
+        })
+      );
+});
+// Fetch event: serving cached content when offline
+self.addEventListener('fetch', event => {
+    console.log('Fetch event:', event);
+    event.respondWith(
+        fetch(event.request).catch(() => {
+            // If the network request fails, try to serve the request from the cache
+            return caches.match(event.request).then(response => {
+                if (response) {
+                    return response;
+                } else if (event.request.headers.get('accept').includes('text/html')) {
+                    // If the request is for an HTML page, serve the offline page
+                    return caches.match(OFFLINE_URL);
+                }
             });
-        });
-    }
+        })
+    );
+});
+
+
+
         </script>
 
 

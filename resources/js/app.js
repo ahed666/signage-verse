@@ -1,7 +1,18 @@
 import './bootstrap';
 import 'flowbite';
 
-
+if ('serviceWorker' in navigator) {
+    console.log('Service Worker test');
+        window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/device-player')
+            .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(error => {
+            console.log('Service Worker registration failed:', error);
+            });
+        });
+    }
 
 
 
