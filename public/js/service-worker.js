@@ -14,7 +14,7 @@ self.addEventListener('install', event => {
 
 
         '/',
-        './index.html'
+        '/js/starter-device.js'
         // Add more resources as needed
       ]).catch(error => {
         console.error('Failed to cache resources:', error);
