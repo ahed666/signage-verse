@@ -12,7 +12,7 @@ Route::get('/', function () {
 });
 
 Route::get('/serviceworker.js', function () {
-    return response(file_get_contents(asset('/serviceworker.js')), 200, [
+    return response(file_get_contents(asset('/js/serviceworker.js')), 200, [
     'Content-Type' => 'text/javascript',
     'Cache-Control' => 'public, max-age=3600',
     ]);
