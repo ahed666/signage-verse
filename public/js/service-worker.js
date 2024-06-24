@@ -1,5 +1,5 @@
-const CACHE_NAME = 'offline-cache-v3';
-const OFFLINE_URL = './index.html'; // The URL of the web page to cache
+const CACHE_NAME = 'offline-cache-v4';
+const OFFLINE_URL = '/index.html'; // The URL of the web page to cache
 
 // Install event: caching the offline page
 self.addEventListener('install', event => {
@@ -13,7 +13,7 @@ self.addEventListener('install', event => {
         // Add other resources you want to cache
 
 
-        '/',
+        OFFLINE_URL,
         '/js/starter-device.js'
         // Add more resources as needed
       ]).catch(error => {
@@ -28,11 +28,19 @@ self.addEventListener('activate',event=>{
     console.log('service worker :activated')
 })
 // Fetch event: serving cached content when offline
-self.addEventListener('fetch', (event) => {
-    console.log(event);
+self.addEventListener('fetch', event => {
+    console.log('Fetch event:', event);
     event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
+        fetch(event.request).catch(() => {
+            // If the network request fails, try to serve the request from the cache
+            return caches.match(event.request).then(response => {
+                if (response) {
+                    return response;
+                } else if (event.request.headers.get('accept').includes('text/html')) {
+                    // If the request is for an HTML page, serve the offline page
+                    return caches.match(OFFLINE_URL);
+                }
+            });
         })
     );
 });
