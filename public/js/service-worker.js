@@ -13,7 +13,8 @@ self.addEventListener('install', event => {
         // Add other resources you want to cache
 
 
-        '/'
+        '/',
+        './index.html'
         // Add more resources as needed
       ]).catch(error => {
         console.error('Failed to cache resources:', error);
