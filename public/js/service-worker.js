@@ -1,4 +1,4 @@
-const CACHE_NAME = 'offline-cache-v2';
+const CACHE_NAME = 'offline-cache-v3';
 const OFFLINE_URL = './index.html'; // The URL of the web page to cache
 
 // Install event: caching the offline page
