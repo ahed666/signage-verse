@@ -1,7 +1,6 @@
 const CACHE_NAME = 'offline-cache-v2';
 const OFFLINE_URL = './index.html'; // The URL of the web page to cache
-console.log(OFFLINE_URL,'url');
-console.log(navigator);
+
 // Install event: caching the offline page
 self.addEventListener('install', event => {
 
