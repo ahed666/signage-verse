@@ -1,5 +1,5 @@
 const CACHE_NAME = 'offline-cache-v5';
-const OFFLINE_URL = '/index.html'; // The URL of the web page to cache
+const OFFLINE_URL = '/device-player'; // The URL of the web page to cache
 
 // Install event: caching the offline page
 self.addEventListener('install', event => {
