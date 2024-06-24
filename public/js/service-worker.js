@@ -12,8 +12,8 @@ self.addEventListener('install', event => {
 
         // Add other resources you want to cache
 
-        OFFLINE_URL,
-        '/',
+
+        '/'
         // Add more resources as needed
       ]).catch(error => {
         console.error('Failed to cache resources:', error);
